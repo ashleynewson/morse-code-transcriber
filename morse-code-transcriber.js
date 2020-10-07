@@ -7,6 +7,7 @@ const decode = document.getElementById("decode");
 const reset = document.getElementById("reset");
 const clear = document.getElementById("clear");
 const auto_decode = document.getElementById("auto-decode");
+const quiet = document.getElementById("quiet");
 const play = document.getElementById("play");
 const stop = document.getElementById("stop");
 const wpm = document.getElementById("wpm");
@@ -112,7 +113,6 @@ for (const prosign of prosigns) {
 }
 
 for (const p of Object.keys(plain_to_code)) {
-    // reference.textContent += p + "\t" + plain_to_code[p] + "\n";
     const entry = document.createElement("pre");
     entry.className = "reference-entry";
     entry.textContent = p + "\t" + plain_to_code[p];
@@ -245,7 +245,9 @@ const down = function(e) {
         scribe_buffer.push({"off":duration});
     }
     since = now;
-    on();
+    if (!quiet.checked) {
+        on();
+    }
 };
 const up = function(e) {
     const now = performance.now();
@@ -407,6 +409,14 @@ const do_decode = function() {
 
 mousekey.addEventListener("mousedown", down);
 mousekey.addEventListener("mouseup", up);
+mousekey.addEventListener("touchstart", function(e) {
+    down();
+    e.preventDefault();
+});
+mousekey.addEventListener("touchend", function(e) {
+    up();
+    e.preventDefault();
+});
 keyboardkey.addEventListener("keydown", function(e) {
     if (e.key === " ") {
         down();

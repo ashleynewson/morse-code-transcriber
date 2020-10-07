@@ -1,28 +1,39 @@
 h3 {
     font-family: sans;
+    font-size: 15pt;
+}
+label, p {
+    font-family: serif;
+    font-size: 12pt;
 }
 body {
     font-family: serif;
+    font-size: 12pt;
     background: black;
     color: lightgrey;
 }
 button {
+    font-size: 12pt;
     background: #224;
     color: lightgrey;
 }
 input {
+    font-size: 12pt;
     background: #112;
     color: lightgrey;
 }
 textarea {
     background: #112;
     color: lightgrey;
-    width: 90%;
-    height: 8em;
+    width: 100%;
+    height: 10vh;
 }
-#mousekey, #keyboardkey {
-    width: 10em;
-    height: 5em;
+#mousekey {
+    width: 100%;
+    height: 25vh;
+}
+#keyboardkey:focus {
+    background: #181;
 }
 .reference-entry {
     font-size: 12pt;
