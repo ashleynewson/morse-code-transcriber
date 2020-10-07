@@ -1,0 +1,35 @@
+h3 {
+    font-family: sans;
+}
+body {
+    font-family: serif;
+    background: black;
+    color: lightgrey;
+}
+button {
+    background: #224;
+    color: lightgrey;
+}
+input {
+    background: #112;
+    color: lightgrey;
+}
+textarea {
+    background: #112;
+    color: lightgrey;
+    width: 90%;
+    height: 8em;
+}
+#mousekey, #keyboardkey {
+    width: 10em;
+    height: 5em;
+}
+.reference-entry {
+    font-size: 12pt;
+    font-weight: bold;
+    border: 1px solid grey;
+    display: inline-block;
+    padding: 8pt;
+    width: 15em;
+    margin: 0;
+}

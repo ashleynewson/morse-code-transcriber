@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Morse Code Transcriber</title>
+    <script type="module" src="morse-code-transcriber.js"></script>
+    <link rel="stylesheet" href="morse-code-transcriber.css">
+    </style>
+  </head>
+  <body>
+    <h3>Plaintext</h3>
+    <textarea id="plain"></textarea>
+    <br>
+    <button id="encode">Encode</button>
+    <h3>Morse Code</h3>
+    <textarea id="code"></textarea>
+    <br>
+    <button id="decode">Decode</button>
+    <br>
+    <br>
+    <button id="mousekey">Mouse Key</button>
+    <button id="keyboardkey">Space Key</button>
+    <br>
+    <button id="reset">Reset Calibration</button>
+    <button id="clear">Clear</button>
+    <label>Auto decode</label><input id="auto-decode" type="checkbox" name="auto-decode" checked>
+    <br>
+    <br>
+    <button id="play">Play</button>
+    <button id="stop">Stop</button>
+    <br>
+    <label>Playback words per minute</label> <input id="wpm" type="number" name="wpm" value="15" min="1" max="100">
+    <br>
+    <label>Letter spacing</label> <input id="letter"f type="number" name="letter" value="3" min="3" max="100">
+    <br>
+    <label>Word spacing</label> <input id="word" type="number" name="word" value="7" min="7" max="100">
+    <br>
+    <label>Tone frequency</label> <input id="frequency" type="number" name="frequency" value="880" min="50" max="10000">
+    <h3>Options</h3>
+    <label>Interpret &lt;BT&gt;</label> <input id="interpret-bt" type="checkbox" name="interpret-bt" checked>
+    <h3>Help</h3>
+    <p>
+      The "Mouse Key" and "Space Key" buttons can be used to input morse code and have the computer transcribe the input. The Mouse Key is used by clicking and the Space Key is used by pressing spacebar when the button is focused. When the Space Key is focused, you can also use R to reset calibration and C to clear.
+    </p>
+    <p>
+      Auto-transcribing needs to have detected a clear dot and a clear dash before any transcript is shown. Use a consistent unit length/WPM to avoid confusing the auto-transcriber. You can adjust the letter and word spacing to accomodate a slower pace.
+    </p>
+    <o>
+      One dot is one time unit in length. One dash is three time units in length. Dots and dashes within a letter or prosign are separated by one unit. Standard Morse code has letters separated by three units and words separated by seven units, but these can be adjusted to aid learning.
+    </p>
+    <p>
+      The standard length word, PARIS (.--. .- .-. .. .../) including a space is 50 units long. This makes 10wpm equal to 500 units per minute.
+    </p>
+    <h3>Reference Chart</h3>
+    <div id="reference"></div>
+    <!-- <pre id="reference"></pre> -->
+  </body>
+</html>
