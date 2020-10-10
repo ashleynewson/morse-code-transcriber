@@ -22,6 +22,9 @@ input {
     background: #112;
     color: lightgrey;
 }
+input[type=number] {
+    width: 5em;
+}
 textarea {
     background: #112;
     color: lightgrey;

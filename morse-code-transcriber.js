@@ -8,16 +8,19 @@ const reset = document.getElementById("reset");
 const clear = document.getElementById("clear");
 const auto_decode = document.getElementById("auto-decode");
 const quiet = document.getElementById("quiet");
+const symbol_speed = document.getElementById("symbol-speed");
+const overall_speed = document.getElementById("overall-speed");
 const play = document.getElementById("play");
 const stop = document.getElementById("stop");
 const wpm = document.getElementById("wpm");
 const letter = document.getElementById("letter");
 const word = document.getElementById("word");
 const frequency = document.getElementById("frequency");
+const volume = document.getElementById("volume");
 const interpret_bt = document.getElementById("interpret-bt");
 const reference = document.getElementById("reference");
 
-const standard_duration = 1200; // Unit duration for 50 units per minute
+const standard_duration = 1200; // Unit duration for 50 units per minute (1 wpm)
 
 const plain_to_code = {
     "A": ".-",
@@ -121,6 +124,8 @@ for (const p of Object.keys(plain_to_code)) {
 
 // create web audio api context
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const gain = audioCtx.createGain();
+gain.connect(audioCtx.destination);
 
 // create Oscillator node
 let oscillator = null;
@@ -129,8 +134,12 @@ let playback_position = null;
 
 const scribe_buffer = [];
 let estimated_unit = standard_duration / wpm.value;
-let total_on_time = 0;
+// The on totals techincally contain some duplicate time.
+let total_on_time = 0; // ms
 let total_on_units = 0;
+// These totals are true totals
+let total_time = 0; // ms
+let total_units = 0;
 let since = null;
 
 
@@ -183,27 +192,36 @@ const check_buffer = function() {
                     // dot
                     code.value += ".";
                     total_on_units += 1;
+                    total_units += 1;
                 } else {
                     // dash
                     code.value += "-";
                     total_on_units += 3;
+                    total_units += 3;
                 }
                 total_on_time += signal.on;
+                total_time += signal.on;
             } else if (typeof(signal.off) === "number") {
                 if (signal.off < symbol_vs_letter * estimated_unit) {
                     // symbol separator
+                    total_units += 1;
                 } else if (signal.off < letter_vs_word * estimated_unit) {
                     // character separator
                     code.value += " ";
+                    total_units += parseInt(letter.value);
                 } else {
                     // word separator
                     code.value += "/";
+                    total_units += parseInt(word.value);
                 }
+                total_time += signal.off;
             }
         }
         if (auto_decode.checked) {
             do_decode();
         }
+        symbol_speed.value = (total_on_units / total_on_time) * 60000 / 50;
+        overall_speed.value = (total_units / total_time) * 60000 / 50;
     }
 };
 
@@ -211,13 +229,20 @@ const check_buffer = function() {
 const do_reset = function() {
     total_on_time = 0;
     total_on_units = 0;
-    since = null;
+    symbol_speed.value = "";
+    total_time = 0;
+    total_units = 0;
+    overall_speed.value = "";
     scribe_buffer.splice(0);
 }
 
 const do_clear = function() {
+    total_time = 0;
+    total_units = 0;
+    overall_speed.value = "";
     plain.value = "";
     code.value = "";
+    since = null;
     scribe_buffer.splice(0);
 }
 
@@ -226,7 +251,8 @@ const on = function() {
         oscillator = audioCtx.createOscillator();
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(frequency.value, audioCtx.currentTime); // value in hertz
-        oscillator.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(volume.value, audioCtx.currentTime);
+        oscillator.connect(gain);
         oscillator.start();
     }
 };

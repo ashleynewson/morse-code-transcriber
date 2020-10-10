@@ -26,6 +26,9 @@
       <button id="clear">Clear</button>
       <label>Auto decode</label><input id="auto-decode" type="checkbox" name="auto-decode" checked>
       <label>Quiet transcribe</label><input id="quiet" type="checkbox" name="quiet">
+      <br>
+      <label>Calibrated symbol keying speed (wpm)</label> <input disabled type="number" id="symbol-speed"></pre>
+      <label>Overall text keying speed (wpm)</label> <input disabled type="number" id="overall-speed"></pre>
     </div>
     <br>
     <label>Playback words per minute</label> <input id="wpm" type="number" name="wpm" value="15" min="1" max="100">
@@ -35,6 +38,7 @@
     <label>Word spacing</label> <input id="word" type="number" name="word" value="7" min="7" max="100">
     <br>
     <label>Tone frequency</label> <input id="frequency" type="number" name="frequency" value="880" min="50" max="10000">
+    <label>Volume</label> <input id="volume" type="range" name="volume" value="0.5" min="0" max="1" step="0.01">
     <h3>Options</h3>
     <label>Interpret &lt;BT&gt;</label> <input id="interpret-bt" type="checkbox" name="interpret-bt" checked>
     <h3>Help</h3>
